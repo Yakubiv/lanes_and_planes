@@ -1,0 +1,16 @@
+<%= render "invoices/processes/back_link" %>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h5>New invoice</h5>
+</div>
+
+<%= form_with model: @invoice do |f| %>
+  <fieldset>
+    <div class="mb-3">
+      <%= f.label :pdf, t('invoices.new.pdf_title') %>
+      <%= f.file_field :pdf, accept: Invoice::ACCEPTED_CONTENT_TYPES.join(','), class: 'form-control form-control' %>
+    </div>
+
+    <%=f.submit t('invoices.new.submit'), class: 'btn btn-success' %>
+  </fieldset>
+<% end %>

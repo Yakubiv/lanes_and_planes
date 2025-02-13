@@ -1,0 +1,9 @@
+.file-upload-box {
+  cursor: pointer;
+  transition: border-color 0.3s ease-in-out;
+
+  &:hover {
+    border-color: #007bff;
+  }
+}
+

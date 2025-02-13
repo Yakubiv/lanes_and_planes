@@ -1,0 +1,3 @@
+<%= turbo_stream.update dom_id(@form.invoice, 'steps') do %>
+  <%= render "invoices/processes/#{@next_step}_step", form: @next_form %>
+<% end %>

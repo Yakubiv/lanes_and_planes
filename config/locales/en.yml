@@ -1,0 +1,16 @@
+en:
+  hello: "Hello world"
+  invoices:
+    empty_title: "No invoices found"
+
+    new:
+      pdf_title: Attach PDF invoice
+      submit: Create invoice
+
+    show:
+      title: Invoice %{file} preview
+      process_invoice: Process invoice →
+
+  forms:
+    connect_booking:
+      booking_id_label: "Booking item"

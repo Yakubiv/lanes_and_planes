@@ -1,0 +1,26 @@
+<%= render 'invoices/processes/back_link' %>
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h5><%= t('invoices.show.title', file: @invoice.filename) %> </h5>
+</div>
+
+<div class="row justify-content-md-center text-center">
+  <div class="col-lg-6">
+    <% if @invoice.pdf.representable? %>
+      <div class="pdf-preview-container text-center">
+        <iframe src="<%= url_for(@invoice.pdf) %>" class="pdf-preview"></iframe>
+      </div>
+    <% else %>
+      <%= link_to rails_blob_path(@invoice.pdf, disposition: "attachment") do %>
+        No preview, but you can download it
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<footer class="footer fixed-bottom bg-light py-3">
+  <div class="container">
+    <%= link_to t("invoices.show.process_invoice"), invoice_processes_path(@invoice), class: 'btn btn-primary float-end' %>
+  </div>
+</footer>
+
