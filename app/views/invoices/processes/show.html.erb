@@ -2,7 +2,9 @@
 
 <h3 class="mt-3">Process Invoice</h3>
 
-<%= render "invoices/processes/top_nav" %>
+<%= turbo_frame_tag dom_id(@invoice, 'top_nav') do %>
+  <%= render "invoices/processes/top_nav", current_step: @step %>
+<% end %>
 
 <div class="row mb-5">
   <div class="col-md-7">
@@ -26,5 +28,5 @@
 </div>
 
 <%= turbo_frame_tag dom_id(@form.invoice, 'footer') do %>
-  <%= render "invoices/processes/form_footer", previous_step: nil, step: @step, current_form_id: "#{@step}_form" %>
+  <%= render "invoices/processes/form_footer", previous_step: @previous_step, step: @step, current_form_id: "#{@step}_form" %>
 <% end %>

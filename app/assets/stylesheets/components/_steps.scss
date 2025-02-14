@@ -1,0 +1,15 @@
+.step {
+  margin-right: 10px;
+
+  button {
+    color: #261B23;
+    text-decoration: none;
+    background-color: white;
+    border: none;
+  }
+
+  &__icon {
+    padding: 10px 12px;
+    color: white;
+  }
+}

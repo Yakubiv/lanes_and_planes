@@ -1,7 +1,13 @@
-<div class="d-flex align-items-center mb-4">
-  <span class="badge bg-success me-2">✔</span> Connect booking item
-  <span class="badge bg-success ms-3 me-2">✔</span> Verify booking
-  <span class="badge bg-success ms-3 me-2">✔</span> Verify cost coverage
-  <span class="badge bg-primary ms-3 me-2">4</span> Add invoice details
-  <span class="badge bg-secondary ms-3">5</span> Connect charges
+<div class="d-flex align-items-center my-5">
+  <% ApplicationHelper::ALL_STEPS.each do |step| %>
+    <% step_config = invoice_processing_steps(current_step)[step] %>
+    <div class="step">
+      <%= button_to invoice_processes_path(@invoice, format: :turbo_stream), params: { step: step }, method: :get, data: { turbo_frame: dom_id(@invoice, 'steps') }, disabled: step_config[:disabled]  do %>
+        <span class="step__icon rounded-circle <%= step_config[:bg] %> me-2"><%= step_config[:icon].html_safe %></span>
+        <%= t("invoices.processing.steps.#{step}") %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
+
+

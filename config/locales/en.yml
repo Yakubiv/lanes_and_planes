@@ -1,6 +1,13 @@
 en:
   hello: "Hello world"
   invoices:
+    processing:
+      steps:
+        connect_booking: Connect booking item
+        verify_booking: Verify booking
+        verify_cost_coverage: Verify cost coverage
+        details: Add invoice details
+        connect_charges: Connect charges
     empty_title: "No invoices found"
 
     new:
