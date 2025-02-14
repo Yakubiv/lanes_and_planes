@@ -6,8 +6,12 @@
     text-decoration: none;
     background-color: white;
     border: none;
-  }
 
+  }
+  button:disabled,
+  button[disabled]{
+    cursor: not-allowed;
+  }
   &__icon {
     padding: 10px 12px;
     color: white;

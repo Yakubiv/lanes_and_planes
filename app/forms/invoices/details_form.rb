@@ -1,7 +1,6 @@
 module Invoices
   class DetailsForm
     include ActiveModel::Model
-    include ActiveModel::Attributes
 
     INVOICE_ATTRIBUTES = %i[country vat_id company_name invoice_date invoice_number street street_number postal_code city invoice_has_word_invoice].freeze
 

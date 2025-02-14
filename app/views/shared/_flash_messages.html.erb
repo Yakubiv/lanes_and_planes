@@ -1,0 +1,8 @@
+<div id="flash-messages">
+  <% flash.each do |type, message| %>
+    <% css = { 'notice' => 'primary', 'error' => 'danger' }[type] %>
+    <div class="alert alert-<%= css %>">
+      <%= message %>
+    </div>
+  <% end %>
+</div>

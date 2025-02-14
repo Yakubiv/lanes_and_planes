@@ -6,13 +6,13 @@ module Invoices
     attr_accessor *INVOICE_FIELDS, :invoice
 
     validates :booking_verified, :receiving_company_verified, acceptance: true
-    validates :same_country, presence: true
+    validates :same_country, :invoice, presence: true
 
     def initialize(params= {})
       super(params)
 
       INVOICE_FIELDS.each do |field|
-        instance_variable_set("@#{field}", params[field] || invoice.send(field))
+        instance_variable_set("@#{field}", params[field] || invoice&.send(field))
       end
     end
 

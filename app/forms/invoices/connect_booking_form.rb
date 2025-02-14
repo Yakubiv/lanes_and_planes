@@ -5,6 +5,7 @@ module Invoices
     attr_accessor :booking_id, :invoice
 
     validates :booking_id, presence: true
+    validate :booking_exists
 
     def initialize(params= {})
       super(params)
@@ -24,19 +25,30 @@ module Invoices
       invoice.update!(booking_id: @booking.id)
     end
 
+    def booking_exists
+      @response = Providers::BookingApi.instance.get_booking_details(booking_id)
+      return true if @response
+
+      errors.add(:booking_id, "can't be found")
+    end
+
     def create_booking
-      @booking = Booking.find_or_create_by(booking_id: booking_id)
+      booking_data = @response['data'].first
+      accommodation_details = booking_data['accommodation_details']
+      location = accommodation_details['location']
+
+      @booking = Booking.find_or_create_by(booking_id: booking_data['reservation'])
       @booking.update!(
-        hotel_name: Faker::Company.name,
-        traveler_name: Faker::Name.name,
-        check_in: Faker::Date.forward(days: 23),
-        check_out: Faker::Date.forward(days: 30),
-        company_name: Faker::Company.name,
-        street: Faker::Address.street_name,
-        city: Faker::Address.city,
-        zip: Faker::Address.zip_code,
-        country: Faker::Address.country,
-        street_number: Faker::Address.building_number
+        hotel_name: accommodation_details['name'],
+        traveler_name: booking_data['products'].first['guests'].first['name'],
+        check_in: booking_data['checkin'],
+        check_out: booking_data['checkout'],
+        company_name: accommodation_details['name'],
+        street: location['address'],
+        city: location['city'],
+        zip: location['post_code'],
+        country: location['country'],
+        street_number: location['address'].split(' ').last
       )
       @booking
     end

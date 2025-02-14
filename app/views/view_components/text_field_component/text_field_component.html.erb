@@ -1,0 +1,9 @@
+<div class="mb-2">
+  <%= @f.label @name, @label, class: 'form-label' %>
+  <%= @f.text_field @name, required: @required, class: "form-control form-control-sm #{(@errors || @f.object.errors)[@name].any? ? 'is-invalid' : ''}" %>
+  <% if @errors || @f.object.errors[@name].any? %>
+    <small class="text-danger">
+      <%= (@errors || @f.object.errors)[@name].first %>
+    </small>
+  <% end %>
+</div>

@@ -11,8 +11,8 @@ class CreateInvoices < ActiveRecord::Migration[8.0]
       t.string :country
       t.string :vat_id
       t.string :company_name
-      t.string :invoice_date
-      t.datetime :invoice_number
+      t.datetime :invoice_date
+      t.string :invoice_number
       t.string :street
       t.string :street_number
       t.string :postal_code

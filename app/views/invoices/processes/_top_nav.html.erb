@@ -1,6 +1,6 @@
 <div class="d-flex align-items-center my-5">
   <% ApplicationHelper::ALL_STEPS.each do |step| %>
-    <% step_config = invoice_processing_steps(current_step)[step] %>
+    <% step_config = invoice_processing_steps(@invoice, current_step)[step] %>
     <div class="step">
       <%= button_to invoice_processes_path(@invoice, format: :turbo_stream), params: { step: step }, method: :get, data: { turbo_frame: dom_id(@invoice, 'steps') }, disabled: step_config[:disabled]  do %>
         <span class="step__icon rounded-circle <%= step_config[:bg] %> me-2"><%= step_config[:icon].html_safe %></span>

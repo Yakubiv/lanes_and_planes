@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "invoices#index"
 
-  resources :invoices, only: %i[index show new create] do
+  resources :invoices, only: %i[index show new create update] do
     scope module: :invoices do
       resources :line_items, only: [], param: :index do
         member do

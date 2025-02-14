@@ -24,7 +24,9 @@ module Invoices
           respond_to do |format|
             format.turbo_stream do
               flash[:notice] = "#{@invoice.filename} was successfully processed"
-              render turbo_stream: turbo_stream.action(:redirect, invoices_path)
+              render turbo_stream: [turbo_stream.action(:redirect, invoices_path),
+                                    turbo_stream.replace("flash-messages", partial: "shared/flash_messages")]
+
             end
           end
         end

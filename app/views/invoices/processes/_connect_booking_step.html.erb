@@ -6,7 +6,6 @@
 
 <%= render(CardComponent.new(title: 'Connect booking')) do %>
   <%= form_with model: form, url: invoice_processes_path(form.invoice, step: step), method: :patch, html: { id: "#{step}_form" } do |f| %>
-    <%= f.label :booking_id, t('forms.connect_booking.booking_id_label'), class: 'form-label' %>
-    <%= f.text_field :booking_id, required: true, class: 'form-control' %>
+    <%= render(TextFieldComponent.new(f: f, name: :booking_id, label: t('forms.connect_booking.booking_id_label'), required: true)) %>
   <% end %>
 <% end %>

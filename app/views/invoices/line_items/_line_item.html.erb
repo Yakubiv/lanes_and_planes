@@ -12,12 +12,10 @@
     <% end %>
   </div>
 
-
   <%= ff.hidden_field :id %>
 
   <div class="mb-3">
-    <%= ff.label :traveler_name, "Name of Traveler", class: "form-label" %>
-    <%= ff.text_field :traveler_name, class: "form-control form-control-sm" %>
+    <%= render(TextFieldComponent.new(f: ff, name: :traveler_name, label:  "Name of Traveler")) %>
   </div>
 
   <div class="row mb-3">
@@ -32,13 +30,12 @@
   </div>
 
   <div class="mb-3">
-    <%= ff.label :description, "Description", class: "form-label" %>
-    <%= ff.text_area :description, class: "form-control form-control-sm", rows: 2 %>
+    <%= render(TextFieldComponent.new(f: ff, name: :description, label:  "Description")) %>
   </div>
 
   <div class="mb-3">
     <%= ff.label :category, "Category", class: "form-label" %>
-    <%= ff.select :category, LineItem.categories.keys, { include_blank: 'Please select' }, required: true, class: "form-select form-select-sm" %>
+    <%= ff.select :category, LineItem.categories.keys, { include_blank: 'Please select' }, class: "form-select form-select-sm" %>
   </div>
 
   <div class="row mb-5">
@@ -48,7 +45,7 @@
     </div>
     <div class="col">
       <%= ff.label :unit_price, "Unit Price", class: "form-label" %>
-      <%= ff.number_field :unit_price, class: "form-control form-control-sm", value: "0.00" %>
+      <%= ff.number_field :unit_price, class: "form-control form-control-sm", value: ff.object.unit_price || 0.00 %>
     </div>
   </div>
 <% end %>

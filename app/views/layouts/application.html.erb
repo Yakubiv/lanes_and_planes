@@ -27,6 +27,10 @@
     <%= render 'layouts/header' %>
 
     <div class="container">
+      <%= render "shared/flash_messages" %>
+    </div>
+
+    <div class="container">
       <%= yield %>
     </div>
   </body>

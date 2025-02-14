@@ -16,7 +16,9 @@
 
     <!-- Warning Message -->
     <div class="alert d-flex align-items-center mt-3 text-primary">
-      <i class="bi bi-exclamation-triangle-fill me-2"></i> This is not an invoice
+      <%= button_to invoice_path(@invoice, format: :turbo_stream), data: { confirm: 'Are you sure?' }, params: { invoice: { status: :wrong } }, method: :put, class: 'btn text-primary' do %>
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> This is not an invoice
+        <% end %>
     </div>
   </div>
 

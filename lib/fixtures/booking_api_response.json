@@ -1,0 +1,160 @@
+{
+  "request_id": "01fr9ez700exycb98w90w5r9sh",
+  "data": [
+    {
+      "id": "509430129718799",
+      "accommodation": 123456,
+      "accommodation_details": {
+        "email": "test_hotel@booking.com",
+        "location": {
+          "address": "111 Street Road",
+          "city": 20089219,
+          "coordinates": {
+            "latitude": 11.923274,
+            "longitude": -92.716188
+          },
+          "country": "us",
+          "post_code": "NY 1234"
+        },
+        "name": "Test Booking Hotel USA",
+        "telephone": "+19876543210"
+      },
+      "accommodation_order_references": [
+        "12345",
+        "ABED2312"
+      ],
+      "booker": {
+        "external_account": 13610217,
+        "platform": "mobile"
+      },
+      "cancellation_details": {
+        "at": "2022-11-09T00:00:00+00:00",
+        "fee": {
+          "accommodation_currency": 170.01,
+          "booker_currency": 186.87
+        }
+      },
+      "checkin": "2022-11-10",
+      "checkout": "2022-11-10",
+      "commission": {
+        "actual_amount": null,
+        "actual_percentage": null,
+        "estimated_amount": {
+          "accommodation_currency": 17.5,
+          "booker_currency": 19.23
+        }
+      },
+      "credit_slip": 1223445,
+      "currency": {
+        "accommodation": "EUR",
+        "booker": "USD"
+      },
+      "label": "One123",
+      "pin_code": "1234",
+      "price": {
+        "commissionable": {
+          "accommodation_currency": 164.01,
+          "booker_currency": 180.27
+        },
+        "total": {
+          "accommodation_currency": 170.01,
+          "booker_currency": 186.87
+        }
+      },
+      "products": [
+        {
+          "allocation": {
+            "adults": 2,
+            "children": [
+              3,
+              4,
+              5
+            ],
+            "guests": 5
+          },
+          "guests": [
+            {
+              "email": "test.name@booking.com",
+              "name": "Test Name"
+            }
+          ],
+          "policies": {
+            "cancellation": [
+              {
+                "from": null,
+                "price": {
+                  "accommodation_currency": 170.01,
+                  "booker_currency": 186.87
+                }
+              }
+            ],
+            "meal_plan": {
+              "meals": [
+                "breakfast"
+              ],
+              "plan": "breakfast_included"
+            },
+            "smoking_preference": "non-smoking"
+          },
+          "price": {
+            "base": {
+              "accommodation_currency": 170.01,
+              "booker_currency": 186.87
+            },
+            "extra_charges": {
+              "conditional": [],
+              "non_conditional": [
+                {
+                  "charge": 142,
+                  "mode": "per_person_per_night",
+                  "percentage": null,
+                  "total_amount": {
+                    "accommodation_currency": 6,
+                    "booker_currency": 6.6
+                  },
+                  "unit_amount": {
+                    "accommodation_currency": 3,
+                    "booker_currency": 3.3
+                  }
+                },
+                {
+                  "charge": 21,
+                  "mode": "percentage",
+                  "percentage": 9,
+                  "total_amount": {
+                    "accommodation_currency": 14.04,
+                    "booker_currency": 15.43
+                  },
+                  "unit_amount": null
+                },
+                {
+                  "charge": 22,
+                  "mode": "percentage",
+                  "percentage": 7,
+                  "total_amount": {
+                    "accommodation_currency": 10.92,
+                    "booker_currency": 12
+                  },
+                  "unit_amount": null
+                }
+              ]
+            },
+            "total": {
+              "accommodation_currency": 200.97,
+              "booker_currency": 220.9
+            }
+          },
+          "room": 12345,
+          "room_details": {
+            "name": "Double Deluxe Room"
+          },
+          "status": "booked"
+        }
+      ],
+      "remarks": "We will need an extra cot. Need room on higher floor",
+      "reservation": 12345678,
+      "status": "booked",
+      "stay_probability": 0.12
+    }
+  ]
+}
