@@ -1,0 +1,7 @@
+<%= turbo_stream.update dom_id(@invoice, 'steps') do %>
+  <%= render "invoices/processes/#{@step}_step", form: @form, step: @step %>
+<% end %>
+
+<%= turbo_stream.update dom_id(@invoice, 'footer') do %>
+  <%= render "invoices/processes/form_footer", previous_step: @previous_step, current_form_id: "#{@step}_form" %>
+<% end %>

@@ -1,0 +1,8 @@
+<%= fields model: @new_invoice do |form| %>
+  <%= form.fields_for :line_items, child_index: params[:index] do |f| %>
+    <%= turbo_frame_tag "line_item_#{f.index}" do %>
+      <%= f.hidden_field :id, value: params[:id] %>
+      <%= f.hidden_field :_destroy, value: true %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -8,6 +8,19 @@ class CreateInvoices < ActiveRecord::Migration[8.0]
       t.boolean :receiving_company_verified, default: false
       t.boolean :same_country, default: false
 
+      t.string :country
+      t.string :vat_id
+      t.string :company_name
+      t.string :invoice_date
+      t.datetime :invoice_number
+      t.string :street
+      t.string :street_number
+      t.string :postal_code
+      t.string :city
+      t.boolean :invoice_has_word_invoice
+      t.decimal :total_price, precision: 10, scale: 2
+      t.decimal :subtotal_price, precision: 10, scale: 2
+
       t.timestamps
     end
   end

@@ -3,13 +3,10 @@
   <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it</p>
 </div>
 
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Connect booking</h5>
 
-    <%= form_with model: @form, url: invoice_processes_path(@form.invoice, step: @step), method: :patch, html: { id: "#{@step}_form" } do |f| %>
-      <%= f.label :booking_id, t('forms.connect_booking.booking_id_label'), class: 'form-label' %>
-      <%= f.text_field :booking_id, required: true, class: 'form-control' %>
-    <% end %>
-  </div>
-</div>
+<%= render(CardComponent.new(title: 'Connect booking')) do %>
+  <%= form_with model: form, url: invoice_processes_path(form.invoice, step: step), method: :patch, html: { id: "#{step}_form" } do |f| %>
+    <%= f.label :booking_id, t('forms.connect_booking.booking_id_label'), class: 'form-label' %>
+    <%= f.text_field :booking_id, required: true, class: 'form-control' %>
+  <% end %>
+<% end %>

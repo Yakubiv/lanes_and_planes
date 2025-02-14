@@ -1,138 +1,89 @@
-<%= form_with model: @form, url: invoice_processes_path(@form.invoice, step: @step), method: :patch do |f| %>
+<div class="alert alert-info">
+  <strong>Add additional invoice details</strong>
+  <p>Please enter all required invoice information.</p>
+</div>
+<%= form_with model: form.invoice, url: invoice_processes_path(form.invoice, step: step), method: :patch, html: { id: "#{step}_form" } do |f| %>
+  <% if f.object.same_country %>
+    <%= f.hidden_field :country, value: 'Country' %>
+  <% end %>
 
+  <%= render(CardComponent.new(title: 'Invoicing company')) do %>
+    <div class="mb-2">
+      <%= f.label :country, "Country", class: "form-label" %>
+      <%= f.select :country, ["Germany", "France", "USA"], {}, disabled: f.object.same_country, class: "form-select form-select-sm" %>
+    </div>
 
-  <div class="container mt-4">
-    <!-- Breadcrumb Navigation -->
-    <a href="#" class="text-muted">← Back to overview</a>
+    <div class="mb-2">
+      <%= f.label :vat_id, "VAT ID or Tax Number", class: "form-label" %>
+      <%= f.text_field :vat_id, class: "form-control form-control-sm" %>
+    </div>
 
-    <!-- Progress Steps -->
-    <h3 class="mt-3">Process Invoice</h3>
+    <div class="mb-2">
+      <%= f.label :company_name, "Company Name", class: "form-label" %>
+      <%= f.text_field :company_name, class: "form-control form-control-sm" %>
+    </div>
 
+    <div class="mb-2">
+      <%= f.label :invoice_date, "Invoice Date", class: "form-label" %>
+      <%= f.date_field :invoice_date, value: Date.current, class: "form-control form-control-sm" %>
+    </div>
 
-    <div class="row">
-      <!-- PDF Preview Section -->
-      <div class="col-lg-6">
-        <div class="pdf-preview-container text-center p-3 bg-light">
-          <iframe src="<%= url_for(@invoice.pdf) %>" class="pdf-preview"></iframe>
-        </div>
+    <div class="mb-2">
+      <%= f.label :invoice_number, "Invoice Number", class: "form-label" %>
+      <%= f.text_field :invoice_number, class: "form-control form-control-sm" %>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col">
+        <%= f.label :street, "Street Name", class: "form-label" %>
+        <%= f.text_field :street, class: "form-control form-control-sm" %>
       </div>
-
-      <!-- Invoice Details Form -->
-      <div class="col-lg-6">
-        <div class="alert alert-info">
-          <strong>Add additional invoice details</strong>
-          <p>Please enter all required invoice information.</p>
-        </div>
-
-        <%= form_with model: @invoice, url: invoice_path(@invoice), method: :patch do |f| %>
-          <div class="mb-3">
-            <%= f.label :country, "Country", class: "form-label" %>
-            <%= f.select :country, ["Germany", "France", "USA"], {}, class: "form-select" %>
-          </div>
-
-          <div class="mb-3">
-            <%= f.label :vat_id, "VAT ID or Tax Number", class: "form-label" %>
-            <%= f.text_field :vat_id, class: "form-control" %>
-          </div>
-
-          <div class="mb-3">
-            <%= f.label :company_name, "Company Name", class: "form-label" %>
-            <%= f.text_field :company_name, class: "form-control" %>
-          </div>
-
-          <div class="mb-3">
-            <%= f.label :invoice_date, "Invoice Date", class: "form-label" %>
-            <%= f.date_field :invoice_date, class: "form-control" %>
-          </div>
-
-          <div class="mb-3">
-            <%= f.label :invoice_number, "Invoice Number", class: "form-label" %>
-            <%= f.text_field :invoice_number, class: "form-control" %>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col">
-              <%= f.label :street, "Street Name", class: "form-label" %>
-              <%= f.text_field :street, class: "form-control" %>
-            </div>
-            <div class="col">
-              <%= f.label :street_number, "Street Number", class: "form-label" %>
-              <%= f.text_field :street_number, class: "form-control" %>
-            </div>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col">
-              <%= f.label :postal_code, "Postal Code", class: "form-label" %>
-              <%= f.text_field :postal_code, class: "form-control" %>
-            </div>
-            <div class="col">
-              <%= f.label :city, "City", class: "form-label" %>
-              <%= f.text_field :city, class: "form-control" %>
-            </div>
-          </div>
-
-          <div class="form-check mb-3">
-            <%= f.check_box :invoice_has_word_invoice, class: "form-check-input" %>
-            <%= f.label :invoice_has_word_invoice, "The invoice has the word 'Invoice' on it", class: "form-check-label" %>
-          </div>
-
-          <h5>Line Item 1</h5>
-
-          <div class="mb-3">
-            <%= f.label :traveler_name, "Name of Traveler", class: "form-label" %>
-            <%= f.text_field :traveler_name, class: "form-control" %>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col">
-              <%= f.label :start_date, "Start Date", class: "form-label" %>
-              <%= f.date_field :start_date, class: "form-control" %>
-            </div>
-            <div class="col">
-              <%= f.label :end_date, "End Date", class: "form-label" %>
-              <%= f.date_field :end_date, class: "form-control" %>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <%= f.label :description, "Description", class: "form-label" %>
-            <%= f.text_area :description, class: "form-control", rows: 2 %>
-          </div>
-
-          <div class="mb-3">
-            <%= f.label :category, "Category", class: "form-label" %>
-            <%= f.select :category, ["Hotel", "Transport", "Food"], {}, class: "form-select" %>
-          </div>
-
-          <div class="row mb-3">
-            <div class="col">
-              <%= f.label :quantity, "Quantity", class: "form-label" %>
-              <%= f.number_field :quantity, class: "form-control", value: 1 %>
-            </div>
-            <div class="col">
-              <%= f.label :unit_price, "Unit Price", class: "form-label" %>
-              <%= f.text_field :unit_price, class: "form-control", value: "0.00" %>
-            </div>
-          </div>
-
-          <%= f.submit "Add Line Item", class: "btn btn-outline-secondary mb-3" %>
-        <% end %>
-
-        <h5>Totals</h5>
-        <ul class="list-group mb-4">
-          <li class="list-group-item">Subtotal: 2460,14</li>
-          <li class="list-group-item">VAT 19%: 172,21</li>
-          <li class="list-group-item fw-bold">Total EUR: 2632,35</li>
-        </ul>
+      <div class="col">
+        <%= f.label :street_number, "Street Number", class: "form-label" %>
+        <%= f.text_field :street_number, class: "form-control form-control-sm" %>
       </div>
     </div>
 
-    <!-- Navigation Buttons -->
-    <div class="d-flex justify-content-between mt-4">
-      <a href="#" class="btn btn-outline-secondary">← Previous</a>
-      <a href="#" class="btn btn-primary">Go To Next Step →</a>
+    <div class="row mb-3">
+      <div class="col">
+        <%= f.label :postal_code, "Postal Code", class: "form-label" %>
+        <%= f.text_field :postal_code, class: "form-control form-control-sm" %>
+      </div>
+      <div class="col">
+        <%= f.label :city, "City", class: "form-label" %>
+        <%= f.text_field :city, class: "form-control form-control-sm" %>
+      </div>
     </div>
-  </div>
-  <%= f.submit 'sd' %>
+
+    <div class="form-check mb-2">
+      <%= f.check_box :invoice_has_word_invoice, class: "form-check-input" %>
+      <%= f.label :invoice_has_word_invoice, "The invoice has the word 'Invoice' on it", class: "form-check-label" %>
+    </div>
+  <% end %>
+
+  <%= render(CardComponent.new(title: '')) do |component| %>
+    <div id="line_items">
+      <%= f.fields_for :line_items, form.invoice.line_items.presence || LineItem.new do |ff| %>
+        <%= render "invoices/line_items/line_item", ff: ff %>
+      <% end %>
+    </div>
+
+    <% component.with_footer do %>
+      <%= button_tag type: 'submit', formaction: invoice_line_item_path(form.invoice, form.invoice.line_items.size),
+                     formmethod: :post, formnovalidate: true,  class: 'btn btn-secondary btn-sm', id: "add-line-item" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
+            <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+          </svg>
+          Add Line Item
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= render(CardComponent.new(title: 'Total')) do %>
+    <p>Subtotal <span class="float-end">2460</span></p>
+    <p>VAT 19%  <span class="float-end">172,21</span></p>
+    <p>Total EUR <span class="float-end">2632,35</span></p>
+  <% end %>
 <% end %>
+

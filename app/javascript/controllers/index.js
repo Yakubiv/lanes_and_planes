@@ -2,3 +2,8 @@
 import { application } from "controllers/application"
 import { eagerLoadControllersFrom } from "@hotwired/stimulus-loading"
 eagerLoadControllersFrom("controllers", application)
+
+Turbo.StreamActions.redirect = function () {
+  console.log("redirecting to", this.target);
+  Turbo.visit(this.target);
+};

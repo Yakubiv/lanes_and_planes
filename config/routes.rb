@@ -3,6 +3,13 @@ Rails.application.routes.draw do
 
   resources :invoices, only: %i[index show new create] do
     scope module: :invoices do
+      resources :line_items, only: [], param: :index do
+        member do
+          delete '(:id)' => "line_items#destroy", as: ""
+          post '/' => "line_items#create"
+        end
+      end
+
       resource :processes, only: %i[show update]
     end
     get '/:step', controller: 'invoices/processes', action: :show, as: :step, on: :member

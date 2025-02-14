@@ -3,17 +3,52 @@
   <p>Please make sure that all of the following information is correctly shown on the received invoice.</p>
 </div>
 
-<%= form_with model: @form, url: invoice_processes_path(@form.invoice, step: @step), method: :patch do |f| %>
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Connect booking</h5>
+<%= form_with model: form, url: invoice_processes_path(form.invoice, step: step), method: :patch, html: { id: "#{step}_form" } do |f| %>
+  <%= render(CardComponent.new(title: 'Location invoicing company')) do %>
+    <div class="form-check form-switch">
+      <%= f.check_box :same_country,  role: :switch, class: 'form-check-input' %>
+      <%= f.label :same_country, 'The invoicing company also resides in Germany', class: 'form-check-label' %>
+    </div>
+  <% end %>
 
-      <%= form_with model: @form, url: invoice_processes_path(@form.invoice, step: @step), method: :patch, html: { id: "#{@step}_form" } do |f| %>
-        <%= f.label :booking_id, t('forms.connect_booking.booking_id_label'), class: 'form-label' %>
-        <%= f.text_field :booking_id, required: true, class: 'form-control' %>
+  <%= render(CardComponent.new(title: 'Booking information')) do %>
+    <p>Name of hotel <span class="float-end"><%= form.invoice.booking.hotel_name %></span></p>
+    <p>Name of first traveller <span class="float-end"><%= form.invoice.booking.traveler_name %></span></p>
+    <p>Check-in date <span class="float-end"><%= form.invoice.booking.check_in.strftime(Constrains::SHORT_DATE_FORMAT) %></span></p>
+    <p>Check-out date <span class="float-end"><%= form.invoice.booking.check_out.strftime(Constrains::SHORT_DATE_FORMAT) %></span></p>
+
+    <hr>
+
+    <div class="form-check">
+      <%= f.check_box :booking_verified, class: 'form-check-input' %>
+      <%= f.label :booking_verified, 'All information above is correctly shown on invoice', class: "form-check-label #{form.errors[:booking_verified].any? ? 'text-danger': ''}" %>
+      <% if form.errors[:booking_verified].any? %>
+        <small class="text-danger">
+          You must agree before submitting.
+        </small>
       <% end %>
     </div>
-  </div>
+  <% end %>
 
+  <%= render(CardComponent.new(title: 'Receiving Company')) do %>
+    <p>Name of company <span class="float-end"><%= form.invoice.booking.company_name %></span></p>
+    <p>Additional address information <span class="float-end">-</span></p>
+    <p>Street name <span class="float-end"><%= form.invoice.booking.street %></span></p>
+    <p>Street number <span class="float-end"><%= form.invoice.booking.street_number %></span></p>
+    <p>Postal code <span class="float-end"><%= form.invoice.booking.zip %></span></p>
+    <p>City <span class="float-end"><%= form.invoice.booking.city %></span></p>
+    <p>Country <span class="float-end"><%= form.invoice.booking.country %></span></p>
 
+    <hr>
+
+    <div class="form-check">
+      <%= f.check_box :receiving_company_verified, class: 'form-check-input' %>
+      <%= f.label :receiving_company_verified, 'All information above is correctly shown on invoice', class: "form-check-label #{form.errors[:receiving_company_verified].any? ? 'text-danger': ''}" %>
+      <% if form.errors[:receiving_company_verified].any? %>
+        <small class="text-danger">
+          You must agree before submitting.
+        </small>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>

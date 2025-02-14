@@ -1,45 +1,25 @@
 module Invoices
   class VerifyBookingForm
     include ActiveModel::Model
+    INVOICE_FIELDS = %i[booking_verified receiving_company_verified same_country].freeze
 
-    attr_accessor :booking_id, :invoice
+    attr_accessor *INVOICE_FIELDS, :invoice
 
-    validates :booking_id, presence: true
+    validates :booking_verified, :receiving_company_verified, acceptance: true
+    validates :same_country, presence: true
 
-    # delegate :attributes=, to: :invoice, prefix: true
+    def initialize(params= {})
+      super(params)
+
+      INVOICE_FIELDS.each do |field|
+        instance_variable_set("@#{field}", params[field] || invoice.send(field))
+      end
+    end
 
     def submit
       return false if invalid?
 
-      attach_booking_to_invoice
-    end
-
-    def next_step
-
-    end
-
-    private
-
-    def attach_booking_to_invoice
-      invoice.booking_id = booking.id
-      invoice.save
-    end
-
-    def booking
-      # return false unless booking_id
-      @booking = Booking.find_or_create_by(reference_id: booking_id)
-      @booking.update(
-        hotel_name: Faker::Company.name,
-        traveler_name: Faker::Name.name,
-        check_in: Faker::Date.forward(days: 23),
-        check_out: Faker::Date.forward(days: 30),
-        company_name: Faker::Company.name,
-        street: Faker::Address.street_name,
-        city: Faker::Address.city,
-        zip: Faker::Address.zip_code,
-        country: Faker::Address.country,
-        street_number: Faker::Address.building_number
-      )
+      @invoice.update(booking_verified: booking_verified, receiving_company_verified: receiving_company_verified, same_country: same_country)
     end
   end
 end

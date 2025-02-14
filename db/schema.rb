@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_11_121923) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_13_132534) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -62,9 +62,35 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_11_121923) do
     t.boolean "booking_verified", default: false
     t.boolean "receiving_company_verified", default: false
     t.boolean "same_country", default: false
+    t.string "country"
+    t.string "vat_id"
+    t.string "company_name"
+    t.string "invoice_date"
+    t.datetime "invoice_number"
+    t.string "street"
+    t.string "street_number"
+    t.string "postal_code"
+    t.string "city"
+    t.boolean "invoice_has_word_invoice"
+    t.decimal "total_price", precision: 10, scale: 2
+    t.decimal "subtotal_price", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["booking_id"], name: "index_invoices_on_booking_id"
+  end
+
+  create_table "line_items", force: :cascade do |t|
+    t.integer "invoice_id"
+    t.string "traveler_name", null: false
+    t.datetime "start_date", null: false
+    t.datetime "end_date", null: false
+    t.text "description"
+    t.integer "category", null: false
+    t.integer "quantity", null: false
+    t.decimal "unit_price", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invoice_id"], name: "index_line_items_on_invoice_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

@@ -1,0 +1,15 @@
+
+<div class="card mb-3">
+  <div class="card-body">
+    <% if @title.present? %>
+      <h5 class="card-title mb-4"><%= @title %></h5>
+    <% end %>
+    <%= content %>
+  </div>
+
+  <% if footer? %>
+    <div class="card-footer">
+      <%= footer %>
+    </div>
+  <% end %>
+</div>

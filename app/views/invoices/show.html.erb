@@ -10,10 +10,6 @@
       <div class="pdf-preview-container text-center">
         <iframe src="<%= url_for(@invoice.pdf) %>" class="pdf-preview"></iframe>
       </div>
-    <% else %>
-      <%= link_to rails_blob_path(@invoice.pdf, disposition: "attachment") do %>
-        No preview, but you can download it
-      <% end %>
     <% end %>
   </div>
 </div>

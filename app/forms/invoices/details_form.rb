@@ -1,45 +1,43 @@
 module Invoices
   class DetailsForm
     include ActiveModel::Model
+    include ActiveModel::Attributes
 
-    attr_accessor :booking_id, :invoice
+    INVOICE_ATTRIBUTES = %i[country vat_id company_name invoice_date invoice_number street street_number postal_code city invoice_has_word_invoice].freeze
 
-    validates :booking_id, presence: true
+    attr_accessor *INVOICE_ATTRIBUTES, :invoice, :line_items_attributes
+    validates *INVOICE_ATTRIBUTES, presence: true
 
-    # delegate :attributes=, to: :invoice, prefix: true
+    def initialize(params= {})
+      super(params)
+
+      INVOICE_ATTRIBUTES.each do |field|
+        instance_variable_set("@#{field}", params[field] || invoice.send(field))
+      end
+    end
 
     def submit
       return false if invalid?
 
-      attach_booking_to_invoice
-    end
-
-    def next_step
-
+      invoice.update(invoice_attributes)
     end
 
     private
 
-    def attach_booking_to_invoice
-      invoice.booking_id = booking.id
-      invoice.save
-    end
-
-    def booking
-      # return false unless booking_id
-      @booking = Booking.find_or_create_by(reference_id: booking_id)
-      @booking.update(
-        hotel_name: Faker::Company.name,
-        traveler_name: Faker::Name.name,
-        check_in: Faker::Date.forward(days: 23),
-        check_out: Faker::Date.forward(days: 30),
-        company_name: Faker::Company.name,
-        street: Faker::Address.street_name,
-        city: Faker::Address.city,
-        zip: Faker::Address.zip_code,
-        country: Faker::Address.country,
-        street_number: Faker::Address.building_number
-      )
+    def invoice_attributes
+      {
+        country: country,
+        vat_id: vat_id,
+        company_name: company_name,
+        invoice_date: invoice_date,
+        invoice_number: invoice_number,
+        street: street,
+        street_number: street_number,
+        postal_code: postal_code,
+        city: city,
+        invoice_has_word_invoice: invoice_has_word_invoice,
+        line_items_attributes: line_items_attributes
+      }
     end
   end
 end

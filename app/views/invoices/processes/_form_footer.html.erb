@@ -1,7 +1,9 @@
-<footer class="footer fixed-bottom bg-light py-3">
-  <div class="container d-flex justify-content-between">
-    <button class="btn btn-secondary btn-sm">← Previous</button>
-
+<footer class="footer position-fixed bottom-0 start-0 end-0 bg-light py-3">
+  <div class="container d-flex flex-row-reverse justify-content-between">
     <%= button_tag "Go To Next Step →", form: current_form_id, class: "btn btn-primary btn-sm" %>
+
+    <% if previous_step %>
+      <%= link_to '← Previous', invoice_processes_path(@invoice, step: previous_step, format: :turbo_stream), data: { turbo_prefetch: false, turbo_frame: dom_id(@invoice, 'steps') }, class: "btn btn-secondary btn-sm" %>
+    <% end %>
   </div>
 </footer>

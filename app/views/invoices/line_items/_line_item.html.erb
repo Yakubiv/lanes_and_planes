@@ -1,0 +1,54 @@
+<%= turbo_frame_tag "line_item_#{ff.index}" do %>
+  <div class="mb-4">
+    <h5 class="d-inline">Line item <%= ff.index.to_i + 1 %></h5>
+    <% if ff.object %>
+      <%= ff.button type: 'submit', formaction: invoice_line_item_path(@invoice, ff.index, ff.object.id),
+                    formmethod: :delete,
+                    formnovalidate: true,
+                    class: "btn text-secondary float-end",
+                    data: { turbo_frame: "line_item_#{ff.index}" } do %>
+        <i class="bi bi-x-circle"></i>
+      <% end %>
+    <% end %>
+  </div>
+
+
+  <%= ff.hidden_field :id %>
+
+  <div class="mb-3">
+    <%= ff.label :traveler_name, "Name of Traveler", class: "form-label" %>
+    <%= ff.text_field :traveler_name, class: "form-control form-control-sm" %>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <%= ff.label :start_date, "Start Date", class: "form-label" %>
+      <%= ff.date_field :start_date, class: "form-control form-control-sm" %>
+    </div>
+    <div class="col">
+      <%= ff.label :end_date, "End Date", class: "form-label" %>
+      <%= ff.date_field :end_date, class: "form-control form-control-sm" %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= ff.label :description, "Description", class: "form-label" %>
+    <%= ff.text_area :description, class: "form-control form-control-sm", rows: 2 %>
+  </div>
+
+  <div class="mb-3">
+    <%= ff.label :category, "Category", class: "form-label" %>
+    <%= ff.select :category, LineItem.categories.keys, { include_blank: 'Please select' }, required: true, class: "form-select form-select-sm" %>
+  </div>
+
+  <div class="row mb-5">
+    <div class="col">
+      <%= ff.label :quantity, "Quantity", class: "form-label" %>
+      <%= ff.number_field :quantity, class: "form-control form-control-sm", value: 1 %>
+    </div>
+    <div class="col">
+      <%= ff.label :unit_price, "Unit Price", class: "form-label" %>
+      <%= ff.number_field :unit_price, class: "form-control form-control-sm", value: "0.00" %>
+    </div>
+  </div>
+<% end %>
