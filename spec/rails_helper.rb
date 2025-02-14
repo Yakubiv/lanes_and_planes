@@ -42,6 +42,9 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+Capybara.default_max_wait_time = 10
+Capybara.server = :puma, { Silent: true }
+
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include ActiveStorageValidations::Matchers
@@ -49,6 +52,9 @@ RSpec.configure do |config|
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
   ]
+  config.before(type: :system) do
+    driven_by :selenium_chrome_headless # Or your preferred default driver
+  end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

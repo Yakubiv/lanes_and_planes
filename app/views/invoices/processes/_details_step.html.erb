@@ -2,7 +2,7 @@
   <strong>Add additional invoice details</strong>
   <p>Please enter all required invoice information.</p>
 </div>
-<%= form_with model: form.invoice, url: invoice_processes_path(form.invoice, step: step), method: :patch, html: { id: "#{step}_form" } do |f| %>
+<%= form_with model: form.invoice, url: invoice_processes_path(form.invoice, step: step), method: :put, html: { id: "#{step}_form" } do |f| %>
   <% if f.object.same_country %>
     <%= f.hidden_field :country, value: 'Country' %>
   <% end %>
