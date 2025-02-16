@@ -1,10 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Invoice processing", type: :system do
-  before do
-    driven_by(:selenium_chrome_headless)
-  end
-
   context 'when invoice is pending' do
     let!(:invoice) { create(:invoice, status: :pending) }
 
@@ -51,6 +47,41 @@ RSpec.describe "Invoice processing", type: :system do
 
       expect(page).to have_content("#{invoice.filename} was successfully processed")
       expect(page).to have_current_path(invoices_path)
+    end
+  end
+
+  context 'when you are on verify booking step' do
+    let!(:invoice) { create(:invoice, status: :pending) }
+
+    it 'goes back to previous step with footer link' do
+      visit invoice_path(invoice)
+
+      click_on 'Process'
+
+      expect(page).to have_current_path(invoice_processes_path(invoice))
+      expect(page).to have_content('Connect the correct booking item ID')
+
+      fill_in 'Booking item', with: '12345678'
+      click_on 'Go To Next Step →'
+      expect(page).to have_content('Verify the booking')
+      click_on '← Previous'
+      expect(page).to have_content('Connect the correct booking item ID')
+      expect(page).to have_current_path(invoice_processes_path(invoice))
+    end
+
+    it 'goes back to previous step with top navbar link' do
+      visit invoice_path(invoice)
+
+      click_on 'Process'
+
+      expect(page).to have_current_path(invoice_processes_path(invoice))
+      expect(page).to have_content('Connect the correct booking item ID')
+
+      fill_in 'Booking item', with: '12345678'
+      click_on 'Go To Next Step →'
+      expect(page).to have_content('Verify the booking')
+      click_on 'Connect booking item'
+      expect(page).to have_content('Connect the correct booking item ID')
     end
   end
 end
